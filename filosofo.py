@@ -4,12 +4,12 @@ import random
 
 class Filosofo(threading.Thread):
 
-    def __init__(self, id_filosofo, lista_de_palillos, orden_de_palillos):
+    def __init__(self, id_filosofo, lista_de_palillos):
         threading.Thread.__init__(self)
         self.id_filosofo = id_filosofo
         self.lista_de_palillos = lista_de_palillos
-        self.palillo_izquierdo = orden_de_palillos[self.id_filosofo][0]
-        self.palillo_derecho = orden_de_palillos[self.id_filosofo][1]
+        self.palillo_izquierdo = (self.id_filosofo+1) % len(self.lista_de_palillos)
+        self.palillo_derecho = self.id_filosofo
 
     def obtener_tenedor_izquierdo(self):
         self.lista_de_palillos[self.palillo_izquierdo].acquire()
@@ -33,23 +33,17 @@ class Filosofo(threading.Thread):
         self.obtener_tenedor_izquierdo()
         self.obtener_tenedor_derecho()
         print(f"El filosofo {self.id_filosofo} come")
-        time.sleep( random.randint(500, 1000) / 1000 )
+        time.sleep( random.randint(5, 10) / 10 )
         self.liberar_tenedor_derecho()
         self.liberar_tenedor_izquierdo()
         print(f"El filosofo {self.id_filosofo} termino de comer")
         
     def pensar(self):
         print(f"El filosofo {self.id_filosofo} piensa")
-        time.sleep( random.randint(500, 1000) / 1000 )
+        time.sleep( random.randint(5, 10) / 10 )
 
     def run(self):
-        limite = 4
+        limite = 1000
         for i in range(0, limite):
             self.pensar()
             self.comer()
-
-        """ ciclo infinito    
-        while(True):
-            self.pensar()
-            self.comer()
-        """

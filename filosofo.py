@@ -33,14 +33,14 @@ class Filosofo(threading.Thread):
         self.obtener_tenedor_izquierdo()
         self.obtener_tenedor_derecho()
         print(f"El filosofo {self.id_filosofo} come")
-        time.sleep( random.randint(5, 10) / 10 )
+        time.sleep( random.randint(1, 10) / 100 )
         self.liberar_tenedor_derecho()
         self.liberar_tenedor_izquierdo()
         print(f"El filosofo {self.id_filosofo} termino de comer")
         
     def pensar(self):
         print(f"El filosofo {self.id_filosofo} piensa")
-        time.sleep( random.randint(5, 10) / 10 )
+        time.sleep( random.randint(1, 10) / 100 )
 
     def run(self):
         limite = 1000
